@@ -1,13 +1,13 @@
-const ApiBuilder = require('claudia-api-builder'),
-  mongoose = require('mongoose'),
-  api = new ApiBuilder();
+const ApiBuilder = require('claudia-api-builder');
+const mongoose = require('mongoose');
+const api = new ApiBuilder();
+const bluebird = require('bluebird');
 const Todo = require('./model/todos');
-
-/* connect to db */
 const dbString = `mongodb://${process.env.DATABASE_USER}:${
   process.env.DATABASE_PASSWORD
 }@ds237748.mlab.com:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
-mongoose.connect(dbString);
+
+mongoose.Promise = bluebird;
 
 /* api */
 api.get('/hello', function() {
@@ -21,11 +21,10 @@ api.get('/greet', function(request) {
 
 /* database routes execution */
 api.get('/todos', request => {
-  try {
-    Todo.find((err, todo) => {
-      if (err) {
-        throw err;
-      } else {
+  const db = mongoose.connect(dbString).connection;
+  db.once('open', () => {
+    Todo.find()
+      .then(todo => {
         return {
           statusCode: 200,
           headers: {
@@ -34,35 +33,38 @@ api.get('/todos', request => {
           },
           body: JSON.stringify(todo),
         };
-      }
-    });
-  } catch (error) {
-    return {
-      error: error.message,
-    };
-  }
+      })
+      .catch(err => {
+        throw {
+          err: err.message,
+        };
+      })
+      .finally(() => {
+        db.close();
+      });
+  });
 });
 
 api.get('/todo/{id}', request => {
-  try {
-    const db = mongoose.connect(dbString).connection;
-    const { id } = request.pathParams;
-    db.once('open', () => {
-      return Todo.findById({
-        _id: id,
-      }).exec((err, todo) => {
-        if (err) {
-          throw err;
-        } else {
-          return todo;
-        }
+  const db = mongoose.connect(dbString).connection;
+  const { id } = request.pathParams;
+  db.once('open', () => {
+    Todo.findById({
+      _id: id,
+    })
+      .then(todo => {
+        return todo;
+      })
+      .catch(error => {
+        throw {
+          error: err.message,
+        };
+      })
+      .finally(() => {
+        db.close();
       });
-    });
-  } catch (error) {
-    throw {
-      error,
-    };
-  }
+  });
 });
+s;
 
 module.exports = api;
