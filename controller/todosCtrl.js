@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+require('../model/todos');
 const db = mongoose.model('Todos');
 
 // get all todos
