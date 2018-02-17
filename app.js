@@ -5,7 +5,7 @@ const ApiBuilder = require('claudia-api-builder'),
 /* connect to db */
 const dbURI = `mongodb://${process.env.DATABASE_USER}:${
   process.env.DATABASE_PASSWORD
-}@ds155747.mlab.com:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
+}@ds237748.mlab.com:${process.env.DATABASE_PORT}/${process.env.DATABASE_NAME}`;
 
 mongoose.connect(dbURI);
 

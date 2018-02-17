@@ -13,4 +13,4 @@ const todosSchema = new mongoose.Schema({
 });
 
 
-mongoose.model('Todos', todosSchema);
+module.exports = mongoose.model('Todos',todosSchema);

@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "todos-test-executor",
+    "name": "todos-test",
+    "region": "eu-west-1"
+  },
+  "api": {
+    "id": "7w8k69lo75",
+    "module": "app"
+  }
+}
