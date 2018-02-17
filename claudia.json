@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "aws_lambda-executor",
+    "name": "aws_lambda",
+    "region": "eu-west-1"
+  },
+  "api": {
+    "id": "ydeort0ani",
+    "module": "app"
+  }
+}
