@@ -1,5 +1,5 @@
 const mongoose = require( 'mongoose' );
-const {DATABASE_NAME,DATABASE_PASSWORD,DATABASE_USER,DATABASE_PORT} = require('env');
+const {DATABASE_NAME,DATABASE_PASSWORD,DATABASE_USER,DATABASE_PORT} = require('../env');
 let shutdown;
 
 const dbURI= `mongodb://${DATABASE_USER}:${DATABASE_PASSWORD}@ds155747.mlab.com:${DATABASE_PORT}/${DATABASE_NAME}`;

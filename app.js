@@ -22,4 +22,3 @@ api.get('/todo/{id}',todosCtrl.getTodo);
 
 module.exports = api;
 
-
