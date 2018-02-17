@@ -1,7 +1,7 @@
 const mongoose = require('mongoose'),
 Schema = mongoose.Schema; 
 
-const todosSchema = new mongoose.Schema({
+const todosSchema = mongoose.model('Todos', {
 	title : {
 	  type : String,
     required: true
@@ -13,4 +13,5 @@ const todosSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Todos',todosSchema);
+
+module.exports = todosSchema;
